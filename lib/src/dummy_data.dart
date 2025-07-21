@@ -1,11 +1,42 @@
+/// Static data collections used for generating dummy content.
+///
+/// This class provides various arrays of words, names, and character sets
+/// that are used by the [DataGenerator] to create realistic fake data
+/// for form fields during development and testing.
+///
+/// All data is stored as static constants for optimal performance and
+/// memory usage since these values never change during runtime.
 class DummyData {
+  /// Private constructor to prevent instantiation.
+  /// This class is intended to be used only as a static data provider.
+  DummyData._();
+
+  /// Collection of consonant letters used for random text generation.
+  ///
+  /// These consonants are used when generating random words or when
+  /// creating phonetically plausible text content. Excludes 'y' as it
+  /// can function as both a consonant and vowel.
   static const List<String> consonants = [
     'b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 
     'n', 'p', 'q', 'r', 's', 't', 'v', 'w', 'x', 'z'
   ];
 
+  /// Collection of vowel letters used for random text generation.
+  ///
+  /// These vowels are combined with consonants to create pronounceable
+  /// text sequences and ensure generated content has a natural flow.
   static const List<String> vowels = ['a', 'e', 'i', 'o', 'u'];
 
+  /// Comprehensive word bank for generating realistic text content.
+  ///
+  /// This collection includes:
+  /// - Classic Lorem Ipsum words for traditional placeholder text
+  /// - Positive descriptive adjectives for professional content
+  /// - Common action and concept words for varied contexts
+  /// - Words suitable for bios, descriptions, and general text fields
+  ///
+  /// The words are carefully selected to create coherent, professional-sounding
+  /// text when combined randomly, avoiding offensive or inappropriate content.
   static const List<String> wordBank = [
     'lorem', 'ipsum', 'dolor', 'sit', 'amet', 'consectetur',
     'adipiscing', 'elit', 'sed', 'do', 'eiusmod', 'tempor',
@@ -42,10 +73,31 @@ class DummyData {
     'quality', 'excellence', 'perfection', 'mastery', 'expertise'
   ];
 
+  /// Common domain extensions for generating realistic email addresses and URLs.
+  ///
+  /// Includes the most frequently used top-level domains:
+  /// - .com (commercial) - most common
+  /// - .org (organization) - non-profits
+  /// - .net (network) - internet infrastructure
+  /// - .edu (education) - educational institutions
+  /// - .gov (government) - government agencies
+  /// - .mil (military) - military organizations
+  /// - .biz (business) - business use
+  /// - .info (information) - informational sites
   static const List<String> domains = [
     '.com', '.org', '.net', '.edu', '.gov', '.mil', '.biz', '.info'
   ];
 
+  /// Collection of common first names for generating realistic personal data.
+  ///
+  /// This list includes:
+  /// - Popular first names from various cultural backgrounds
+  /// - Both traditional and modern naming conventions
+  /// - Gender-neutral options for inclusive data generation
+  /// - Names that are easily recognizable and professional
+  ///
+  /// The selection aims to represent diversity while maintaining
+  /// familiarity for testing and development purposes.
   static const List<String> firstNames = [
     'James', 'Mary', 'John', 'Patricia', 'Robert', 'Jennifer',
     'Michael', 'Linda', 'William', 'Elizabeth', 'David', 'Barbara',
@@ -58,6 +110,16 @@ class DummyData {
     'Edward', 'Dorothy', 'Ronald', 'Amy', 'Timothy', 'Angela'
   ];
 
+  /// Collection of common last names/surnames for generating realistic personal data.
+  ///
+  /// This comprehensive list includes:
+  /// - Surnames from various ethnic and cultural backgrounds
+  /// - Common family names from different regions and languages
+  /// - Names that reflect modern demographic diversity
+  /// - Professional-sounding surnames suitable for business contexts
+  ///
+  /// When combined with first names, these create believable full names
+  /// for testing user registration, contact forms, and profile data.
   static const List<String> lastNames = [
     'Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Garcia',
     'Miller', 'Davis', 'Rodriguez', 'Martinez', 'Hernandez',

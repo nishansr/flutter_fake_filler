@@ -62,6 +62,7 @@ FakeFiller(
   fabIcon: Icons.auto_fix_high,
   fabBackgroundColor: Colors.green,
   fabTooltip: 'Auto-fill forms',
+  showSnackbar: true, // Show success/info messages (default: true)
   child: MaterialApp(
     // Your app here
   ),
@@ -115,6 +116,7 @@ FakeFiller(
   fabBackgroundColor: Colors.red,      // Custom background color
   fabIcon: Icons.auto_awesome,         // Custom icon
   fabTooltip: 'Fill all fields',      // Custom tooltip
+  showSnackbar: false,                 // Disable snackbar notifications
   child: MaterialApp(
     // Your app here
   ),
@@ -122,6 +124,20 @@ FakeFiller(
 ```
 
 **Note**: When you provide a custom `fabBackgroundColor`, the package automatically calculates the appropriate contrasting color for the icon to ensure good visibility.
+
+#### Snackbar Notifications
+
+By default, the package shows helpful snackbar messages when forms are filled or when no fields are found. You can disable these notifications:
+
+```dart
+FakeFiller(
+  enabled: true,
+  showSnackbar: false, // Silent mode - no snackbars shown
+  child: MaterialApp(
+    // Your app here
+  ),
+)
+```
 
 ### How it works
 
@@ -248,6 +264,10 @@ The main widget that wraps your app and provides the fake filling functionality.
 | `fabIcon` | `IconData?` | `Icons.auto_fix_high` | Icon for the floating action button |
 | `fabBackgroundColor` | `Color?` | `Theme.primaryColor` | Background color of the FAB |
 | `fabTooltip` | `String?` | `'Fill forms with dummy data'` | Tooltip text for the FAB |
+| `fabLocation` | `FloatingActionButtonLocation?` | `null` | Standard Flutter FAB positioning |
+| `fabRightOffset` | `double?` | `16.0` | Distance from right edge (custom positioning) |
+| `fabBottomOffset` | `double?` | `16.0` | Distance from bottom edge (custom positioning) |
+| `showSnackbar` | `bool` | `true` | Whether to show snackbar notifications after filling |
 
 ### DataGenerator
 

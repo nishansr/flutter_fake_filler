@@ -15,6 +15,7 @@ class MyApp extends StatelessWidget {
       fabBackgroundColor: Colors.deepPurple, // Custom FAB color
       fabIcon: Icons.auto_awesome, // Custom icon
       fabTooltip: 'Auto-fill all empty fields',
+      showSnackbar: true, // Show snackbar after filling (default: true)
       // Use standard Flutter FAB locations
       fabLocation: FloatingActionButtonLocation.endFloat,
       
@@ -216,3 +217,23 @@ class _SignUpFormState extends State<SignUpForm> {
     );
   }
 }
+
+/*
+ * Alternative configurations:
+ * 
+ * // Silent mode - no snackbars shown
+ * FakeFiller(
+ *   enabled: true,
+ *   showSnackbar: false, // Disable snackbar notifications
+ *   child: MaterialApp(...),
+ * )
+ * 
+ * // Custom positioning with snackbars disabled
+ * FakeFiller(
+ *   enabled: true,
+ *   showSnackbar: false,
+ *   fabRightOffset: 30.0,
+ *   fabBottomOffset: 100.0,
+ *   child: MaterialApp(...),
+ * )
+ */

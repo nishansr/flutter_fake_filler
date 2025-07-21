@@ -1,5 +1,13 @@
 import 'package:flutter/material.dart';
 
+/// A utility class for detecting and analyzing text input fields in a Flutter widget tree.
+///
+/// The [FormFieldDetector] provides methods to traverse the widget tree and locate
+/// [TextField] and [TextFormField] widgets, extracting their controllers and
+/// metadata for automated form filling purposes.
+///
+/// This class is designed to work with the Flutter Fake Filler package to
+/// automatically detect form fields and generate appropriate fake data for them.
 class FormFieldDetector {
   static List<TextEditingController> findTextFields(BuildContext context) {
     final List<TextEditingController> controllers = [];

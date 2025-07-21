@@ -3,6 +3,7 @@
 ### Core Parameters
 - `child` (required): The child widget to wrap (typically MaterialApp)
 - `enabled`: Enable/disable the fake filler functionality (default: true)
+- `showSnackbar`: Show/hide snackbar notifications after filling forms (default: true)
 
 ### Floating Action Button Customization
 - `fabIcon`: Custom icon for the FAB (default: Icons.auto_fix_high)
@@ -57,8 +58,19 @@ FakeFiller(
 )
 ```
 
+#### Silent Mode (No Snackbars)
+```dart
+FakeFiller(
+  enabled: true,
+  showSnackbar: false, // Disable all snackbar notifications
+  fabBackgroundColor: Colors.purple,
+  child: MaterialApp(...),
+)
+```
+
 ### Notes
 - When `fabLocation` is provided, it takes precedence over custom offsets
 - Custom background colors automatically get contrasting foreground colors
 - The package respects TextField `maxLength` and `maxLines` properties
 - Only empty fields are filled to avoid overwriting user input
+- When `showSnackbar` is false, no success or error messages are displayed

@@ -1,7 +1,59 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_fake_filler/flutter_fake_filler.dart';
 
 void main() {
+  group('FakeFiller Widget Tests', () {
+    testWidgets('should create FakeFiller with default parameters', (WidgetTester tester) async {
+      await tester.pumpWidget(
+        FakeFiller(
+          child: MaterialApp(
+            home: Scaffold(
+              body: TextField(),
+            ),
+          ),
+        ),
+      );
+
+      expect(find.byType(FakeFiller), findsOneWidget);
+      expect(find.byType(FloatingActionButton), findsOneWidget);
+    });
+
+    testWidgets('should respect showSnackbar parameter', (WidgetTester tester) async {
+      await tester.pumpWidget(
+        FakeFiller(
+          showSnackbar: false,
+          child: MaterialApp(
+            home: Scaffold(
+              body: TextField(),
+            ),
+          ),
+        ),
+      );
+
+      expect(find.byType(FakeFiller), findsOneWidget);
+      expect(find.byType(FloatingActionButton), findsOneWidget);
+    });
+
+    testWidgets('should create FakeFillerWidget alias', (WidgetTester tester) async {
+      await tester.pumpWidget(
+        FakeFillerWidget(
+          child: MaterialApp(
+            home: Scaffold(
+              body: TextField(),
+            ),
+          ),
+        ),
+      );
+
+      expect(find.byType(FakeFiller), findsOneWidget);
+    });
+
+    test('FakeFillerWidget should be alias for FakeFiller', () {
+      expect(FakeFillerWidget, equals(FakeFiller));
+    });
+  });
+
   group('DataGenerator Tests', () {
     test('generates email addresses', () {
       final email = DataGenerator.email();
