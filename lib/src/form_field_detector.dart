@@ -9,6 +9,28 @@ import 'package:flutter/material.dart';
 /// This class is designed to work with the Flutter Fake Filler package to
 /// automatically detect form fields and generate appropriate fake data for them.
 class FormFieldDetector {
+  /// Discovers all [TextEditingController] instances in the widget tree.
+  ///
+  /// Performs a depth-first traversal of the widget tree starting from the
+  /// provided context to locate all [TextField] and [TextFormField] widgets
+  /// that have associated controllers.
+  ///
+  /// The method uses a visitor pattern to safely traverse the widget tree,
+  /// handling any potential errors that might occur during traversal without
+  /// stopping the discovery process.
+  ///
+  /// Parameters:
+  /// - [context]: The [BuildContext] to start the widget tree traversal from
+  ///
+  /// Returns:
+  /// A [List] of unique [TextEditingController] instances found in the tree.
+  /// Duplicate controllers are automatically filtered out.
+  ///
+  /// Example:
+  /// ```dart
+  /// final controllers = FormFieldDetector.findTextFields(context);
+  /// print('Found ${controllers.length} text fields');
+  /// ```
   static List<TextEditingController> findTextFields(BuildContext context) {
     final List<TextEditingController> controllers = [];
     final Set<TextEditingController> uniqueControllers = {};
@@ -40,6 +62,38 @@ class FormFieldDetector {
     return controllers;
   }
 
+  /// Extracts metadata and configuration from a text field controller.
+  ///
+  /// Analyzes the widget tree to find the [TextField] or [TextFormField]
+  /// associated with the given controller and extracts useful metadata
+  /// for data generation purposes.
+  ///
+  /// The method attempts to determine:
+  /// - **Input type**: Derived from [TextInputType] (email, phone, number, etc.)
+  /// - **Field name**: Extracted from label text, hint text, or other identifiers
+  /// - **Length constraints**: Maximum character length if specified
+  /// - **Line constraints**: Maximum number of lines for multi-line fields
+  ///
+  /// This information is used by the data generator to provide contextually
+  /// appropriate fake data for each field type.
+  ///
+  /// Parameters:
+  /// - [controller]: The [TextEditingController] to analyze
+  /// - [context]: The [BuildContext] for widget tree traversal
+  ///
+  /// Returns:
+  /// A [Map] containing field metadata with the following keys:
+  /// - `'inputType'`: String representing the input type ('text', 'email', 'tel', etc.)
+  /// - `'fieldName'`: String containing the field name or label
+  /// - `'maxLength'`: int? representing maximum character length
+  /// - `'maxLines'`: int? representing maximum number of lines
+  ///
+  /// Example:
+  /// ```dart
+  /// final info = FormFieldDetector.getFieldInfo(emailController, context);
+  /// print('Field type: ${info['inputType']}'); // 'email'
+  /// print('Field name: ${info['fieldName']}'); // 'Email Address'
+  /// ```
   static Map<String, dynamic> getFieldInfo(TextEditingController controller, BuildContext context) {
     // Try to find the associated TextField/TextFormField to get more info
     String inputType = 'text';
