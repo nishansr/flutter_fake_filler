@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Flutter Fake Filler - Automated Form Testing for Flutter</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="description" content="Flutter Fake Filler - Automated form filling tool for Flutter development and testing. Automatically generate dummy data for form fields during development." />
+    <meta name="keywords" content="flutter, dart, form, testing, automation, fake data, dummy data, development tools" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0"
+    />
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Flutter Fake Filler Documentation" />
+    <meta property="og:description" content="Automated form filling tool for Flutter development and testing" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://nishansr.github.io/flutter_fake_filler/" />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
+    
+    <!-- Theme -->
+    <link
+      rel="stylesheet"
+      href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css"
+    />
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="assets/style.css" />
+    <link rel="stylesheet" href="css/code.css" />
+    <link rel="stylesheet" href="css/main.css" />
+
+    <link rel="icon" type="image/png" href="images/favicon.png" />
+
+    <style>
+      .markdown-section h1,
+      .markdown-section h2,
+      .markdown-section h3 {
+        color: #4eaae6;
+      }
+      .markdown-section code {
+        background-color: #f8f8f8;
+        border-radius: 3px;
+        color: #e96900;
+        font-family: "Roboto Mono", Monaco, courier, monospace;
+        margin: 0 2px;
+        padding: 3px 5px;
+        white-space: pre-wrap;
+      }
+      .token.keyword {
+        color: #4eaae6;
+      }
+      .token.string {
+        color: #690;
+      }
+    </style>
+  </head>
+  <body>
+    <nav></nav>
+    <div id="app"></div>
+    <script>
+      window.$docsify = {
+        name: "Flutter Fake Filler",
+        repo: "https://github.com/nishansr/flutter_fake_filler",
+        loadSidebar: true,
+        loadNavbar: true,
+        subMaxLevel: 3,
+        auto2top: true,
+        coverpage: true,
+        onlyCover: false,
+        maxLevel: 4,
+        search: {
+          maxAge: 86400000,
+          paths: "auto",
+          placeholder: "Search documentation...",
+          noData: "No results found",
+          depth: 4,
+          hideOtherSidebarContent: false,
+        },
+        copyCode: {
+          buttonText: "Copy",
+          errorText: "Error",
+          successText: "Copied",
+        },
+        pagination: {
+          previousText: 'Previous',
+          nextText: 'Next',
+          crossChapter: true,
+          crossChapterText: true,
+        },
+        themeColor: "#4eaae6",
+        alias: {
+          "/.*/_sidebar.md": "/_sidebar.md",
+          "/.*/_navbar.md": "/_navbar.md",
+        },
+        plugins: [
+          function(hook, vm) {
+            hook.beforeEach(function(html) {
+              return html + '\n\n----\n\n*Last updated: ' + (new Date()).toLocaleDateString() + '*';
+            });
+          }
+        ]
+      };
+    </script>
+    <!-- Docsify core -->
+    <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
+    
+    <!-- Search plugin -->
+    <script src="//cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.min.js"></script>
+    
+    <!-- Copy code plugin -->
+    <script src="//cdn.jsdelivr.net/npm/docsify-copy-code@2"></script>
+    
+    <!-- Zoom image plugin -->
+    <script src="//cdn.jsdelivr.net/npm/docsify@4/lib/plugins/zoom-image.min.js"></script>
+    
+    <!-- Pagination plugin -->
+    <script src="//cdn.jsdelivr.net/npm/docsify-pagination@2/dist/docsify-pagination.min.js"></script>
+    
+    <!-- External script plugin -->
+    <script src="//cdn.jsdelivr.net/npm/docsify@4/lib/plugins/external-script.min.js"></script>
+    
+    <!-- Code highlighting -->
+    <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-dart.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-yaml.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-json.min.js"></script>
+  </body>
+</html>
