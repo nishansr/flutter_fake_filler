@@ -1,0 +1,7 @@
+* [🏠 Home](/)
+* [� Install](content/usage/install.md)
+* [🚀 Quick Start](content/usage/quick-start.md)
+* [📝 Examples](content/examples/simple-form.md)
+* [🎨 Customize](content/features/customization.md)
+* [💡 API](content/api/fake-filler.md)
+* [🐛 GitHub](https://github.com/nishansr/flutter_fake_filler)
