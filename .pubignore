@@ -1,0 +1,24 @@
+# Exclude docs directory from published package
+# (docs/ is for GitHub Pages, doc/ is for Pub package compliance)
+docs/
+
+# Exclude build artifacts and cache
+build/
+.dart_tool/
+
+# Exclude IDE files
+.idea/
+.vscode/
+*.iml
+
+# Exclude OS files
+.DS_Store
+Thumbs.db
+
+# Exclude git files
+.git/
+.gitignore
+
+# Exclude development files
+test_data_generation.dart
+example/positioning_example.dart
