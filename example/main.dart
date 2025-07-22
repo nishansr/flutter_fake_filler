@@ -18,16 +18,13 @@ class MyApp extends StatelessWidget {
       showSnackbar: true, // Show snackbar after filling (default: true)
       // Use standard Flutter FAB locations
       fabLocation: FloatingActionButtonLocation.endFloat,
-      
+
       // Alternative: Use custom positioning with offsets
       // fabRightOffset: 20,
       // fabBottomOffset: 80,
-      
       child: MaterialApp(
         title: 'Flutter Fake Filler Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
+        theme: ThemeData(primarySwatch: Colors.blue),
         home: const SignUpForm(),
       ),
     );
@@ -84,18 +81,12 @@ class _SignUpFormState extends State<SignUpForm> {
               children: [
                 const Text(
                   'Sign Up Form',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 16),
                 const Text(
                   'Tap the floating action button to automatically fill all empty fields with dummy data!',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.grey,
-                  ),
+                  style: TextStyle(fontSize: 16, color: Colors.grey),
                 ),
                 const SizedBox(height: 24),
                 TextField(

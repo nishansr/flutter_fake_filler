@@ -25,7 +25,7 @@ class DataGenerator {
   DataGenerator._();
 
   /// Random number generator instance used throughout the class.
-  /// 
+  ///
   /// Uses a single instance to ensure consistent randomization
   /// while avoiding the overhead of creating multiple Random objects.
   static final Random _random = Random();
@@ -53,11 +53,11 @@ class DataGenerator {
       start = end;
       end = temp;
     }
-    
+
     if (start == end) {
       return start; // Return the value if they're equal
     }
-    
+
     final min = start;
     final max = end;
     double result = _random.nextDouble() * (max - min + 1) + min;
@@ -91,7 +91,7 @@ class DataGenerator {
     if (minLength <= 0) minLength = 1;
     if (maxLength < minLength) maxLength = minLength;
     if (maxLength > 50) maxLength = 50; // Reasonable upper limit
-    
+
     final wordLength = randomNumber(minLength, maxLength);
     String resultWord = "";
     bool odd = true;
@@ -127,11 +127,12 @@ class DataGenerator {
   /// ```
   static String words(int wordCount, [int maxLength = 0]) {
     if (wordCount <= 0) return '';
-    
+
     String resultPhrase = "";
 
     for (int i = 0; i < wordCount; i++) {
-      String word = DummyData.wordBank[_random.nextInt(DummyData.wordBank.length)];
+      String word =
+          DummyData.wordBank[_random.nextInt(DummyData.wordBank.length)];
       final phraseLength = resultPhrase.length;
 
       if (phraseLength == 0 ||
@@ -141,12 +142,12 @@ class DataGenerator {
       }
 
       String newPhrase = phraseLength > 0 ? "$resultPhrase $word" : word;
-      
+
       // Check if adding this word would exceed maxLength
       if (maxLength > 0 && newPhrase.length > maxLength) {
         break;
       }
-      
+
       resultPhrase = newPhrase;
     }
 
@@ -166,7 +167,7 @@ class DataGenerator {
   /// Generates a random email address with a realistic username and domain.
   ///
   /// Creates an email by combining a random username (3-8 characters) with
-  /// an "example" domain prefix and a random domain extension from the 
+  /// an "example" domain prefix and a random domain extension from the
   /// available domains list. Ensures the email doesn't exceed 50 characters.
   ///
   /// Returns:
@@ -180,13 +181,13 @@ class DataGenerator {
     String username = scrambledWord(minLength: 3, maxLength: 8).toLowerCase();
     final domain = DummyData.domains[_random.nextInt(DummyData.domains.length)];
     String result = "$username@example$domain";
-    
+
     // Ensure email is not too long (basic check)
     if (result.length > 50) {
       username = scrambledWord(minLength: 3, maxLength: 5).toLowerCase();
       result = "$username@example.com";
     }
-    
+
     return result;
   }
 
@@ -305,26 +306,30 @@ class DataGenerator {
   /// final paragraph = DataGenerator.paragraph(); // "Lorem ipsum dolor sit amet..."
   /// final short = DataGenerator.paragraph(minWords: 3, maxWords: 5, maxLength: 50);
   /// ```
-  static String paragraph({int minWords = 10, int maxWords = 50, int maxLength = 200}) {
+  static String paragraph({
+    int minWords = 10,
+    int maxWords = 50,
+    int maxLength = 200,
+  }) {
     if (minWords <= 0) minWords = 1;
     if (maxWords < minWords) maxWords = minWords;
     if (maxLength <= 0) maxLength = 200;
-    
+
     final wordCount = randomNumber(minWords, maxWords);
     String resultPhrase = words(wordCount, maxLength);
-    
+
     // Ensure we have some content even if maxLength is very small
     if (resultPhrase.isEmpty && maxLength > 0) {
       resultPhrase = words(1, maxLength);
     }
-    
+
     // Add period only if there's room and content doesn't already end with punctuation
-    if (resultPhrase.isNotEmpty && 
-        !RegExp(r'[.!?]$').hasMatch(resultPhrase) && 
+    if (resultPhrase.isNotEmpty &&
+        !RegExp(r'[.!?]$').hasMatch(resultPhrase) &&
         (maxLength == 0 || resultPhrase.length < maxLength)) {
       resultPhrase += ".";
     }
-    
+
     return resultPhrase;
   }
 
@@ -346,16 +351,23 @@ class DataGenerator {
   /// final url = DataGenerator.website(); // "https://www.lorem.com"
   /// ```
   static String website() {
-    String scrambledWord = DataGenerator.scrambledWord(minLength: 3, maxLength: 8).toLowerCase();
-    final randomDomain = DummyData.domains[randomNumber(0, DummyData.domains.length - 1)];
+    String scrambledWord = DataGenerator.scrambledWord(
+      minLength: 3,
+      maxLength: 8,
+    ).toLowerCase();
+    final randomDomain =
+        DummyData.domains[randomNumber(0, DummyData.domains.length - 1)];
     String result = "https://www.$scrambledWord$randomDomain";
-    
+
     // Ensure website URL is not too long
     if (result.length > 50) {
-      scrambledWord = DataGenerator.scrambledWord(minLength: 3, maxLength: 5).toLowerCase();
+      scrambledWord = DataGenerator.scrambledWord(
+        minLength: 3,
+        maxLength: 5,
+      ).toLowerCase();
       result = "https://$scrambledWord.com";
     }
-    
+
     return result;
   }
 
@@ -391,17 +403,22 @@ class DataGenerator {
   /// // Email field detection
   /// final email = DataGenerator.getDataForInputType("email", null);
   /// // "lorem@example.com"
-  /// 
+  ///
   /// // Phone field detection
   /// final phone = DataGenerator.getDataForInputType("tel", "phone_number");
   /// // "(555) 123-4567"
-  /// 
+  ///
   /// // Multi-line with constraints
-  /// final bio = DataGenerator.getDataForInputType("text", "bio", 
+  /// final bio = DataGenerator.getDataForInputType("text", "bio",
   ///   maxLength: 100, maxLines: 3);
   /// // "Lorem ipsum dolor sit amet...\nConsectetur adipiscing elit..."
   /// ```
-  static String getDataForInputType(String? inputType, String? fieldName, {int? maxLength, int? maxLines}) {
+  static String getDataForInputType(
+    String? inputType,
+    String? fieldName, {
+    int? maxLength,
+    int? maxLines,
+  }) {
     // Validate input parameters
     if (maxLength != null && maxLength <= 0) {
       return ''; // Return empty string for invalid maxLength
@@ -409,7 +426,7 @@ class DataGenerator {
     if (maxLines != null && maxLines <= 0) {
       maxLines = 1; // Default to single line for invalid maxLines
     }
-    
+
     // Detect field type based on input type and field name
     inputType = inputType?.toLowerCase();
     fieldName = fieldName?.toLowerCase() ?? '';
@@ -417,60 +434,60 @@ class DataGenerator {
     String result = '';
 
     // Email detection
-    if (inputType == 'email' || 
-        fieldName.contains('email') || 
+    if (inputType == 'email' ||
+        fieldName.contains('email') ||
         fieldName.contains('mail')) {
       result = email();
     }
     // Phone detection
-    else if (inputType == 'tel' || 
-        fieldName.contains('phone') || 
-        fieldName.contains('tel') || 
+    else if (inputType == 'tel' ||
+        fieldName.contains('phone') ||
+        fieldName.contains('tel') ||
         fieldName.contains('mobile')) {
       result = phoneNumber();
     }
     // Date detection
-    else if (inputType == 'date' || 
-        fieldName.contains('date') || 
+    else if (inputType == 'date' ||
+        fieldName.contains('date') ||
         fieldName.contains('birth')) {
       result = date();
     }
     // URL detection
-    else if (inputType == 'url' || 
-        fieldName.contains('url') || 
+    else if (inputType == 'url' ||
+        fieldName.contains('url') ||
         fieldName.contains('website')) {
       result = website();
     }
     // Number detection
-    else if (inputType == 'number' || 
-        fieldName.contains('age') || 
-        fieldName.contains('count') || 
+    else if (inputType == 'number' ||
+        fieldName.contains('age') ||
+        fieldName.contains('count') ||
         fieldName.contains('amount')) {
       result = randomNumber(1, 100).toString();
     }
     // Name detection
-    else if (fieldName.contains('firstname') || fieldName.contains('first_name')) {
+    else if (fieldName.contains('firstname') ||
+        fieldName.contains('first_name')) {
       result = firstName();
-    }
-    else if (fieldName.contains('lastname') || fieldName.contains('last_name')) {
+    } else if (fieldName.contains('lastname') ||
+        fieldName.contains('last_name')) {
       result = lastName();
-    }
-    else if (fieldName.contains('name') || fieldName.contains('username')) {
+    } else if (fieldName.contains('name') || fieldName.contains('username')) {
       result = fullName();
     }
     // Bio, description, comment, message - multi-line text
-    else if (fieldName.contains('bio') || 
-             fieldName.contains('description') || 
-             fieldName.contains('comment') || 
-             fieldName.contains('message') || 
-             fieldName.contains('note') ||
-             fieldName.contains('about') ||
-             (maxLines != null && maxLines > 1)) {
+    else if (fieldName.contains('bio') ||
+        fieldName.contains('description') ||
+        fieldName.contains('comment') ||
+        fieldName.contains('message') ||
+        fieldName.contains('note') ||
+        fieldName.contains('about') ||
+        (maxLines != null && maxLines > 1)) {
       // Generate multi-line content
       if (maxLines != null && maxLines > 1) {
         List<String> lines = [];
         int targetLines = randomNumber(maxLines > 2 ? 2 : 1, maxLines);
-        
+
         // Calculate safe length per line to avoid division by zero
         int lengthPerLine = 50; // Default length per line
         if (maxLength != null && maxLength > 0) {
@@ -482,9 +499,13 @@ class DataGenerator {
             targetLines = targetLines > 0 ? targetLines : 1;
           }
         }
-        
+
         for (int i = 0; i < targetLines; i++) {
-          String line = paragraph(minWords: 3, maxWords: 8, maxLength: lengthPerLine);
+          String line = paragraph(
+            minWords: 3,
+            maxWords: 8,
+            maxLength: lengthPerLine,
+          );
           if (line.isNotEmpty) {
             lines.add(line);
           }
@@ -496,7 +517,11 @@ class DataGenerator {
         if (paragraphLength < 10) {
           result = words(1);
         } else {
-          result = paragraph(minWords: 5, maxWords: 15, maxLength: paragraphLength);
+          result = paragraph(
+            minWords: 5,
+            maxWords: 15,
+            maxLength: paragraphLength,
+          );
         }
       }
     }
@@ -515,8 +540,10 @@ class DataGenerator {
         result = result.substring(0, maxLength);
         int lastSpace = result.lastIndexOf(' ');
         int lastNewline = result.lastIndexOf('\n');
-        int cutPoint = [lastSpace, lastNewline].where((i) => i >= 0).fold(-1, (prev, curr) => curr > prev ? curr : prev);
-        
+        int cutPoint = [lastSpace, lastNewline]
+            .where((i) => i >= 0)
+            .fold(-1, (prev, curr) => curr > prev ? curr : prev);
+
         // Only cut at word/line boundary if it doesn't make the result too short
         if (cutPoint > 0 && cutPoint > maxLength * 0.6) {
           result = result.substring(0, cutPoint);

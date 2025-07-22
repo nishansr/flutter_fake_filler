@@ -34,18 +34,18 @@ class FormFieldDetector {
   static List<TextEditingController> findTextFields(BuildContext context) {
     final List<TextEditingController> controllers = [];
     final Set<TextEditingController> uniqueControllers = {};
-    
+
     // Find the root widget context
     void visitor(Element element) {
       try {
         final widget = element.widget;
-        
+
         if (widget is TextField && widget.controller != null) {
           uniqueControllers.add(widget.controller!);
         } else if (widget is TextFormField && widget.controller != null) {
           uniqueControllers.add(widget.controller!);
         }
-        
+
         element.visitChildren(visitor);
       } catch (e) {
         // Ignore individual widget errors and continue traversal
@@ -94,20 +94,23 @@ class FormFieldDetector {
   /// print('Field type: ${info['inputType']}'); // 'email'
   /// print('Field name: ${info['fieldName']}'); // 'Email Address'
   /// ```
-  static Map<String, dynamic> getFieldInfo(TextEditingController controller, BuildContext context) {
+  static Map<String, dynamic> getFieldInfo(
+    TextEditingController controller,
+    BuildContext context,
+  ) {
     // Try to find the associated TextField/TextFormField to get more info
     String inputType = 'text';
     String fieldName = '';
     int? maxLength;
     int? maxLines;
     bool found = false;
-    
+
     void visitor(Element element) {
       if (found) return; // Stop searching once found
-      
+
       try {
         final widget = element.widget;
-        
+
         if (widget is TextField && widget.controller == controller) {
           // Extract input type from keyboard type
           if (widget.keyboardType == TextInputType.emailAddress) {
@@ -121,11 +124,11 @@ class FormFieldDetector {
           } else if (widget.keyboardType == TextInputType.datetime) {
             inputType = 'date';
           }
-          
+
           // Extract maxLength and maxLines
           maxLength = widget.maxLength;
           maxLines = widget.maxLines;
-          
+
           // Try to extract field name from decoration
           if (widget.decoration?.labelText != null) {
             fieldName = widget.decoration!.labelText!;
@@ -137,14 +140,14 @@ class FormFieldDetector {
         } else if (widget is TextFormField && widget.controller == controller) {
           // For TextFormField, extract what we can
           // Note: TextFormField's properties are more limited
-          
+
           // Try to extract field name if decoration is available through reflection
           // This is a simplified approach - in practice, TextFormField properties
           // might need more complex extraction
           found = true;
           return;
         }
-        
+
         element.visitChildren(visitor);
       } catch (e) {
         // Ignore individual widget errors and continue

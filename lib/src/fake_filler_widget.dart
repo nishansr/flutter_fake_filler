@@ -23,35 +23,35 @@ import 'form_field_detector.dart';
 class FakeFiller extends StatefulWidget {
   /// The child widget to wrap (typically a MaterialApp or form screen).
   final Widget child;
-  
+
   /// Whether the fake filler functionality is enabled.
   /// Set to false to disable the floating action button.
   final bool enabled;
-  
+
   /// Custom icon for the floating action button.
   /// Defaults to [Icons.auto_fix_high].
   final IconData? fabIcon;
-  
+
   /// Custom background color for the floating action button.
   /// If null, uses the theme's primary color.
   final Color? fabBackgroundColor;
-  
+
   /// Custom tooltip text for the floating action button.
   /// Defaults to 'Fill forms with dummy data'.
   final String? fabTooltip;
-  
+
   /// Standard Flutter location for the floating action button.
   /// When provided, takes precedence over custom offset positioning.
   final FloatingActionButtonLocation? fabLocation;
-  
+
   /// Distance from the right edge of the screen in pixels.
   /// Only used when [fabLocation] is null.
   final double? fabRightOffset;
-  
+
   /// Distance from the bottom edge of the screen in pixels.
   /// Only used when [fabLocation] is null.
   final double? fabBottomOffset;
-  
+
   /// Whether to show snackbar notifications after filling forms.
   /// When true, shows success messages and field count information.
   /// When false, operates silently without notifications.
@@ -79,14 +79,14 @@ class FakeFiller extends StatefulWidget {
 }
 
 /// Internal state class for [FakeFiller].
-/// 
+///
 /// Manages the floating action button behavior and form filling logic.
 class _FakeFillerState extends State<FakeFiller> {
   /// Navigator key for accessing the current context when filling forms.
   final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
-  
+
   /// Fills all empty text fields on the current screen with dummy data.
-  /// 
+  ///
   /// This method:
   /// 1. Scans the widget tree for TextField and TextFormField widgets
   /// 2. Analyzes each field to determine appropriate data type
@@ -95,10 +95,10 @@ class _FakeFillerState extends State<FakeFiller> {
   /// 5. Shows snackbar notifications if [showSnackbar] is enabled
   void _fillForms() {
     final context = _navigatorKey.currentContext ?? this.context;
-    
+
     // Find all text field controllers in the current widget tree
     final controllers = FormFieldDetector.findTextFields(context);
-    
+
     // Show message if no text fields are found
     if (controllers.isEmpty) {
       if (widget.showSnackbar) {
@@ -113,7 +113,7 @@ class _FakeFillerState extends State<FakeFiller> {
     }
 
     int filledCount = 0;
-    
+
     // Process each text field controller
     for (final controller in controllers) {
       try {
@@ -121,7 +121,7 @@ class _FakeFillerState extends State<FakeFiller> {
         if (controller.text.isEmpty) {
           // Analyze field properties to determine appropriate data type
           final fieldInfo = FormFieldDetector.getFieldInfo(controller, context);
-          
+
           // Generate dummy data with respect to field constraints
           final dummyData = DataGenerator.getDataForInputType(
             fieldInfo['inputType'],
@@ -129,7 +129,7 @@ class _FakeFillerState extends State<FakeFiller> {
             maxLength: fieldInfo['maxLength'],
             maxLines: fieldInfo['maxLines'],
           );
-          
+
           // Ensure we don't set null or problematic data
           if (dummyData.isNotEmpty) {
             controller.text = dummyData;
@@ -147,7 +147,9 @@ class _FakeFillerState extends State<FakeFiller> {
       if (filledCount > 0) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Filled $filledCount text field${filledCount == 1 ? '' : 's'}'),
+            content: Text(
+              'Filled $filledCount text field${filledCount == 1 ? '' : 's'}',
+            ),
             duration: const Duration(seconds: 2),
           ),
         );
@@ -172,7 +174,7 @@ class _FakeFillerState extends State<FakeFiller> {
     // Special handling for MaterialApp to ensure proper navigator integration
     if (widget.child is MaterialApp) {
       final materialApp = widget.child as MaterialApp;
-      
+
       // Wrap MaterialApp with our navigator key and overlay
       return MaterialApp(
         key: materialApp.key,
@@ -208,7 +210,8 @@ class _FakeFillerState extends State<FakeFiller> {
         supportedLocales: materialApp.supportedLocales,
         debugShowMaterialGrid: materialApp.debugShowMaterialGrid,
         showPerformanceOverlay: materialApp.showPerformanceOverlay,
-        checkerboardRasterCacheImages: materialApp.checkerboardRasterCacheImages,
+        checkerboardRasterCacheImages:
+            materialApp.checkerboardRasterCacheImages,
         checkerboardOffscreenLayers: materialApp.checkerboardOffscreenLayers,
         showSemanticsDebugger: materialApp.showSemanticsDebugger,
         debugShowCheckedModeBanner: materialApp.debugShowCheckedModeBanner,
@@ -234,7 +237,7 @@ class _FakeFillerState extends State<FakeFiller> {
 }
 
 /// Internal overlay widget that provides the floating action button UI.
-/// 
+///
 /// This widget handles the positioning and styling of the floating action button
 /// and provides two positioning modes:
 /// 1. Standard Flutter locations using [FloatingActionButtonLocation]
@@ -242,27 +245,27 @@ class _FakeFillerState extends State<FakeFiller> {
 class _FakeFillerOverlay extends StatelessWidget {
   /// The child widget to display under the floating action button.
   final Widget? child;
-  
+
   /// Callback function to execute when the floating action button is tapped.
   final VoidCallback onFillForms;
-  
+
   /// Custom icon for the floating action button.
   final IconData? fabIcon;
-  
+
   /// Custom background color for the floating action button.
   final Color? fabBackgroundColor;
-  
+
   /// Custom tooltip text for the floating action button.
   final String? fabTooltip;
-  
+
   /// Standard Flutter location for the floating action button.
   /// When provided, takes precedence over custom offset positioning.
   final FloatingActionButtonLocation? fabLocation;
-  
+
   /// Distance from the right edge of the screen in pixels.
   /// Only used when [fabLocation] is null.
   final double? fabRightOffset;
-  
+
   /// Distance from the bottom edge of the screen in pixels.
   /// Only used when [fabLocation] is null.
   final double? fabBottomOffset;
@@ -289,8 +292,9 @@ class _FakeFillerOverlay extends StatelessWidget {
         body: child!,
         floatingActionButton: FloatingActionButton(
           onPressed: onFillForms,
-          backgroundColor: fabBackgroundColor ?? Theme.of(context).colorScheme.primary,
-          foregroundColor: fabBackgroundColor != null 
+          backgroundColor:
+              fabBackgroundColor ?? Theme.of(context).colorScheme.primary,
+          foregroundColor: fabBackgroundColor != null
               ? _getContrastingTextColor(fabBackgroundColor!)
               : Theme.of(context).colorScheme.onPrimary,
           tooltip: fabTooltip,
@@ -309,8 +313,9 @@ class _FakeFillerOverlay extends StatelessWidget {
           bottom: fabBottomOffset ?? 16,
           child: FloatingActionButton(
             onPressed: onFillForms,
-            backgroundColor: fabBackgroundColor ?? Theme.of(context).colorScheme.primary,
-            foregroundColor: fabBackgroundColor != null 
+            backgroundColor:
+                fabBackgroundColor ?? Theme.of(context).colorScheme.primary,
+            foregroundColor: fabBackgroundColor != null
                 ? _getContrastingTextColor(fabBackgroundColor!)
                 : Theme.of(context).colorScheme.onPrimary,
             tooltip: fabTooltip,
@@ -322,10 +327,10 @@ class _FakeFillerOverlay extends StatelessWidget {
   }
 
   /// Calculates a contrasting text color for the given background color.
-  /// 
+  ///
   /// Uses the luminance of the background color to determine whether
   /// black or white text would provide better contrast and readability.
-  /// 
+  ///
   /// Returns [Colors.black] for light backgrounds and [Colors.white] for dark backgrounds.
   Color _getContrastingTextColor(Color backgroundColor) {
     // Calculate luminance to determine if text should be light or dark

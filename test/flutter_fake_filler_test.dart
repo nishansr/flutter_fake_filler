@@ -4,14 +4,12 @@ import 'package:flutter_fake_filler/flutter_fake_filler.dart';
 
 void main() {
   group('FakeFiller Widget Tests', () {
-    testWidgets('should create FakeFiller with default parameters', (WidgetTester tester) async {
+    testWidgets('should create FakeFiller with default parameters', (
+      WidgetTester tester,
+    ) async {
       await tester.pumpWidget(
         FakeFiller(
-          child: MaterialApp(
-            home: Scaffold(
-              body: TextField(),
-            ),
-          ),
+          child: MaterialApp(home: Scaffold(body: TextField())),
         ),
       );
 
@@ -19,15 +17,13 @@ void main() {
       expect(find.byType(FloatingActionButton), findsOneWidget);
     });
 
-    testWidgets('should respect showSnackbar parameter', (WidgetTester tester) async {
+    testWidgets('should respect showSnackbar parameter', (
+      WidgetTester tester,
+    ) async {
       await tester.pumpWidget(
         FakeFiller(
           showSnackbar: false,
-          child: MaterialApp(
-            home: Scaffold(
-              body: TextField(),
-            ),
-          ),
+          child: MaterialApp(home: Scaffold(body: TextField())),
         ),
       );
 
@@ -35,14 +31,12 @@ void main() {
       expect(find.byType(FloatingActionButton), findsOneWidget);
     });
 
-    testWidgets('should create FakeFillerWidget alias', (WidgetTester tester) async {
+    testWidgets('should create FakeFillerWidget alias', (
+      WidgetTester tester,
+    ) async {
       await tester.pumpWidget(
         FakeFillerWidget(
-          child: MaterialApp(
-            home: Scaffold(
-              body: TextField(),
-            ),
-          ),
+          child: MaterialApp(home: Scaffold(body: TextField())),
         ),
       );
 
@@ -72,7 +66,7 @@ void main() {
       final firstName = DataGenerator.firstName();
       final lastName = DataGenerator.lastName();
       final fullName = DataGenerator.fullName();
-      
+
       expect(firstName.isNotEmpty, true);
       expect(lastName.isNotEmpty, true);
       expect(fullName, contains(' '));
@@ -98,7 +92,7 @@ void main() {
       final email = DataGenerator.getDataForInputType('email', 'email');
       final phone = DataGenerator.getDataForInputType('tel', 'phone');
       final name = DataGenerator.getDataForInputType('text', 'name');
-      
+
       expect(email, contains('@'));
       expect(phone.length, greaterThan(10));
       expect(name, contains(' '));
