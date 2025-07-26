@@ -1,3 +1,15 @@
+## 1.1.2
+
+* **BUG FIX**: Improved error handling for SnackBar display
+  - Added robust error handling to prevent "No Overlay widget found" exceptions
+  - Enhanced compatibility with custom app architectures and BLoC patterns
+  - Graceful fallback to console logging when SnackBar display is unavailable
+  - Better support for apps that don't use MaterialApp or have custom widget structures
+* **STABILITY**: Enhanced MaterialApp wrapping logic
+  - Improved handling of route-based navigation to prevent black screen issues
+  - Better preservation of original MaterialApp properties
+  - Enhanced compatibility with apps using `onGenerateRoute` and `initialRoute`
+
 ## 1.1.1
 
 * **CODE QUALITY**: Improved code formatting to follow Dart conventions

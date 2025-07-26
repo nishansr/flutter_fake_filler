@@ -20,11 +20,11 @@
 </div>
 
 [Get Started](content/usage/install.md)
-[View Examples](content/examples/)
+[View Examples](content/examples/basic.md)
 
 <div class="scroll-indicator-container">
-<div class="scroll-indicator">
+    <div class="scroll-indicator"></div>
+</div>
 
 <!-- background color -->
-
 ![](images/cover.jpg)

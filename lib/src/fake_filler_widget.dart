@@ -85,6 +85,49 @@ class _FakeFillerState extends State<FakeFiller> {
   /// Navigator key for accessing the current context when filling forms.
   final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
 
+  /// Safely shows a SnackBar with robust error handling.
+  ///
+  /// This method prevents crashes when ScaffoldMessenger is not available
+  /// in the widget tree, which can happen with custom app architectures.
+  void _showSnackBarSafely(String message) {
+    if (!widget.showSnackbar) return;
+
+    try {
+      // Try to find ScaffoldMessenger in the current context
+      final messenger = ScaffoldMessenger.maybeOf(context);
+      if (messenger != null) {
+        messenger.showSnackBar(
+          SnackBar(
+            content: Text(message),
+            duration: const Duration(seconds: 2),
+          ),
+        );
+        return;
+      }
+
+      // Try navigator context as fallback
+      final navigatorContext = _navigatorKey.currentContext;
+      if (navigatorContext != null) {
+        final navMessenger = ScaffoldMessenger.maybeOf(navigatorContext);
+        if (navMessenger != null) {
+          navMessenger.showSnackBar(
+            SnackBar(
+              content: Text(message),
+              duration: const Duration(seconds: 2),
+            ),
+          );
+          return;
+        }
+      }
+
+      // Fallback to console output for debugging
+      debugPrint('FakeFiller: $message');
+    } catch (e) {
+      // Final safety net - log to console if everything else fails
+      debugPrint('FakeFiller: $message');
+    }
+  }
+
   /// Fills all empty text fields on the current screen with dummy data.
   ///
   /// This method:
@@ -101,14 +144,7 @@ class _FakeFillerState extends State<FakeFiller> {
 
     // Show message if no text fields are found
     if (controllers.isEmpty) {
-      if (widget.showSnackbar) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('No text fields found on this screen'),
-            duration: Duration(seconds: 2),
-          ),
-        );
-      }
+      _showSnackBarSafely('No text fields found on this screen');
       return;
     }
 
@@ -143,24 +179,10 @@ class _FakeFillerState extends State<FakeFiller> {
     }
 
     // Show success/status messages if snackbar notifications are enabled
-    if (widget.showSnackbar) {
-      if (filledCount > 0) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              'Filled $filledCount text field${filledCount == 1 ? '' : 's'}',
-            ),
-            duration: const Duration(seconds: 2),
-          ),
-        );
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('All text fields are already filled'),
-            duration: Duration(seconds: 2),
-          ),
-        );
-      }
+    if (filledCount > 0) {
+      _showSnackBarSafely('Filled $filledCount text field${filledCount == 1 ? '' : 's'}');
+    } else {
+      _showSnackBarSafely('All text fields are already filled');
     }
   }
 
@@ -300,7 +322,8 @@ class _FakeFillerOverlay extends StatelessWidget {
           tooltip: fabTooltip,
           child: Icon(fabIcon ?? Icons.auto_fix_high),
         ),
-        floatingActionButtonLocation: fabLocation,
+        floatingActionButtonLocation:
+            fabLocation ?? FloatingActionButtonLocation.endFloat,
       );
     }
 
